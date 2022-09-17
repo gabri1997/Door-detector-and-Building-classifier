@@ -1,5 +1,6 @@
 # Door-detector-and-Building-classifier
 This is a project work done for the Computer Vision and Cognitive System course.
+You are invited to read the report for a complete view of the projects and for a more detailed consultation.
 # CV Project Work - UNIMORE 2020/2021
 
 ### The Team:"
