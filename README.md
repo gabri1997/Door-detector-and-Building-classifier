@@ -31,14 +31,6 @@ Since ResNet architecture may vary in quantity of layers, we made some tests to 
 To do so, we used the early stopping technique, plotting both train and validation loss and saving the model with the
 lower loss value. At first we set up a patience of 5 epochs, afterwards we increased it to 20 if the analysis of the curve
 showed that the model was not overfitting and had a decreasing trend.
-# Figure 1 
-shows an example of early stopping method
-with 5 epoches patience in which the validation loss has a downward trend, whereby the patience could be raised to 20.
-
-
-# Figure 2 
-shows an experiment in which the validation
-loss doesn’t seem to be improvable.
 
 Initially we tried using ResNet152, with a learning rate of 0.001, 0.005, 0.1, 0.2, and 0.5. We were able to see better performances with the first two values, accordingly we decided to apply those learning rates to smaller ResNet, such as ResNet18, ResNet34 and ResNet50. Finally we tried to optimize the neural networks that gave the best two models by applying the Stochastic Gradient Descent, while in the first tests we made use of Adam method. Table 1 shows the results we achieved at this stage.
 As shown here, the best result was achieved with a ResNet34 with 0.005 learning rate value and SGD method.
