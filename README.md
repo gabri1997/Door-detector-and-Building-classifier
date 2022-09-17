@@ -66,6 +66,10 @@ feature does not work.
 Figure 7. Example of good result on YOLO detection.
 In the next pictures we can see different example of results of our system. In particular, in figure 6 the retrieval with network features does not work, while the results are good for ORB, ResNet and YOLO; figure 7 shows a very good result for door detection, while the retrieval is completely wrong. Also, the result of classification should have been church, but it is understandable why the network could confuse churches and historical buildings; in figure 8 both classification and retrieval are good, while the door detection has a low percentage, probably because that door is different than a classic door; finally in figure 9 the system cannot detect a door and the retrieval with ORB is wrong, but both classification and retrieval with network feature are good.
 
+# Example 1
+
 ![tre porte](https://user-images.githubusercontent.com/58270634/190852798-8a9866e0-18ce-4ff7-955c-f71976e65831.jpg)
+
+# Example 2
 
 ![photo_2021-08-05_11-03-21](https://user-images.githubusercontent.com/58270634/190852847-6dd7d641-636d-40cf-9bb7-b36dc598cc31.jpg)
