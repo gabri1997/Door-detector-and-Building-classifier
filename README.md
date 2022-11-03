@@ -16,7 +16,7 @@ one for the classification of buildings and one for door detection. As regards t
 # 1. Introduction
 The use of neural networks can improve everyday life
 quality of everyone, but mostly important they can be used
-for helping people with particular deseas.
+for helping people with particular disease.
 
 # 2.Buildings Classification
 In this Section we describe the dataseta and the chosen Artificial Neural Network for the classification of buildings.
