@@ -1,75 +1,109 @@
-# Door-detector-and-Building-classifier
-This is a project work done for the Computer Vision and Cognitive System course.
-You are invited to read the report for a complete view of the project and for a more detailed consultation.
-# CV Project Work - UNIMORE 2020/2021
+# Door Detector and Building Classifier
 
-### The Team:"
+## Overview
+This project was developed as part of the **Computer Vision and Cognitive System** course during the **UNIMORE 2020/2021 academic year**. It explores building recognition and entrance detection through neural networks and image retrieval techniques. For detailed insights, please refer to the full project report.
 
-- Benedetta Fabrizi ([LinkedIn](https://www.linkedin.com/in/benedetta-fabrizi-54b7971b0) - [GitHub](https://github.com/BerniRubble))
-- Emanuele Bianchi ([LinkedIn](https://www.linkedin.com/in/emanuele-bianchi240497/) - [GitHub](https://github.com/Manu2497))
+---
 
-## The project 🔍
+## The Team 👥
+- **Benedetta Fabrizi**  
+  [LinkedIn](https://www.linkedin.com/in/benedetta-fabrizi-54b7971b0) | [GitHub](https://github.com/BerniRubble)  
+- **Emanuele Bianchi**  
+  [LinkedIn](https://www.linkedin.com/in/emanuele-bianchi240497/) | [GitHub](https://github.com/Manu2497)
 
-Purpose of this work is the development of a frame-work for buildings recognition and the detection of their entrance. To this end, two types of neural networks are used:
-one for the classification of buildings and one for door detection. As regards the classification task, a comparisonwith other approaches based on image retrieval was also made, always with the goal of being able to classify the building, making use of image processing and, therefore, applying filters and image transformations
+---
 
-# 1. Introduction
-The use of neural networks can improve everyday life
-quality of everyone, but mostly important they can be used
-for helping people with particular disease.
+## Project Goals 🔍
 
-# 2.Buildings Classification
-In this Section we describe the dataseta and the chosen Artificial Neural Network for the classification of buildings.
-Finally, a description of the tests run for choosing the best model are reported.
+The aim of this work is twofold:
+1. **Building Classification**: Classify building types using a neural network.  
+2. **Door Detection**: Identify entrances in images using object detection.  
 
-## 2.1. Dataset for ResNet
-Since the impossibility to find a dataset about buildings that fit the project requirements, we built our personal dataset by picking the images from different stock websites.Then, we have arranged them in five different folders, corresponding to the classes defined in the project: house, flat complex, church, historical buildings/monument, shops. After having filled the dataset, we cleaned it from those images not containing useful information. The resulting dataset is balanced, with each class approximately having the same number of photos. Since we built or own dataset, it is not very large. Indeed, the total amount of images is 1300.
-During classification, both in training phase and test phase, the artificial neural network will read directly the folders name and take them as classes name.
-## 2.2. Choice of model
-For classification purpose, we made use of Residual Network, or ResNet[1], which is very popular for image classification. In order to make it compatible with our final goal,we modified the last layer before the fully connected one,also providing it with an additional output: therefore our network returns a matrix [1, 5], where 5 is the number of classes, and the feature vector that we will use in section 4.
-Furthermore, we did a fine-tuning freezing the first layers and retraining just the last 19 layers.
-Since ResNet architecture may vary in quantity of layers, we made some tests to find the best model to fit our data.
-To do so, we used the early stopping technique, plotting both train and validation loss and saving the model with the
-lower loss value. At first we set up a patience of 5 epochs, afterwards we increased it to 20 if the analysis of the curve
-showed that the model was not overfitting and had a decreasing trend.
+Additionally, the project incorporates **image retrieval** to compare alternative approaches to classification, applying image processing techniques and feature extraction.
 
-Initially we tried using ResNet152, with a learning rate of 0.001, 0.005, 0.1, 0.2, and 0.5. We were able to see better performances with the first two values, accordingly we decided to apply those learning rates to smaller ResNet, such as ResNet18, ResNet34 and ResNet50. Finally we tried to optimize the neural networks that gave the best two models by applying the Stochastic Gradient Descent, while in the first tests we made use of Adam method. Table 1 shows the results we achieved at this stage.
-As shown here, the best result was achieved with a ResNet34 with 0.005 learning rate value and SGD method.
+---
 
-# Door Detection
-First we annotated the dataset (the same one built in precedence) identifying the door in each image, to do that we made use of LabelImg, a graphical annotation tool. The network was pre-trained on COCO and then fine-tuned using google colaboratory on about a thousand images of doors.
-As far as the door detection is concerned we used the YOLO network[2], acronym of You Only Look Once, in particular YOLOv2, which is an object detection system aimed for real-time processing. YOLOv2 is less accurate than the region proposal based architectures, but faster because it relies on simpler operations.
+## 1. Introduction
+Neural networks have the potential to improve everyday life significantly and can assist individuals with specific needs. This project exemplifies such applications in computer vision.
 
-# Image retrieval
-In order to face the Image Retrieval part we tried two possible approaches, which are different in the type of features extracted from images. The descriptors adopted as first solution are the ORB (Oriented FAST and rotated BRIEF)[3], while for the second solution the descriptors are the features extracted from the neural network used in classification.
+---
 
-# Dataset for retrieval
-The dataset used for retrieval is composed by the same images of the previous tasks but this time we applied some image processing algorithm over each image: first of all we resized our images to the fixed size of 400 × 400, then we put them in grey scale, finally we applied an equalized histogram[4] and a bilateral filter[5], whose formula
-is given by:
+## 2. Building Classification
 
-# Image retrival task
+### 2.1 Dataset for ResNet
+Since no suitable dataset was available, we created a custom one by collecting 1,300 images from stock websites and organizing them into five classes:
+- House  
+- Flat complex  
+- Church  
+- Historical buildings/monuments  
+- Shops  
 
-In order to extract the features, for this task we modified ResNet. Especially now the net returns features extracted from the last layer before the fully connected one, these features are used as descriptors of the image. In both cases, (ORB descriptor and Neural Network descriptor) as similarity measure, we applied the MSE (Mean Square Error) between the query image and the dataset images.
-Before computing a resulting class, there is a query expansion process that consists in some geometric transformations applied to the query image. The geometric transfor-
-mations are rotation, perspective transformation and WARP transformation.
-After that transformation process the average between the features from the original query image and the features that came from transformed images is computed.
-Finally we estimated the MSE between the average features and the features extracted by images of the dataset and the output is the class with the smallest value of MSE.
-In Figure 5 is possible to see one of best results of two retrieval algorithm.
+To ensure balance, we curated the dataset so each class contained approximately the same number of images. 
 
-# Results
+### 2.2 Model Selection
+We employed **ResNet** (Residual Network) for building classification. The final layer was modified to output a `[1, 5]` matrix, representing the five building classes. Fine-tuning was achieved by freezing the initial layers and retraining the last 19 layers.  
 
-From the conducted experiments, we can conclude that classification via ResNet34 achieves good performance in
-testing phase, while the object detection on doors performed by YOLO can still be improved.
-For what concern the building recognition, among the three approaches examined, the classification through a neural network proves to be the most satisfactory, since it is also able to give a semantic meaning to the feature it extracts. For the same reason, comparing the other two remaining approaches, the image retrieval carried out by exploiting the feature extracted from the network results more stable then the one carried out via ORB.
-Figure 6. Example of result where image retrieval with network
-feature does not work.
-Figure 7. Example of good result on YOLO detection.
-In the next pictures we can see different example of results of our system. In particular, in figure 6 the retrieval with network features does not work, while the results are good for ORB, ResNet and YOLO; figure 7 shows a very good result for door detection, while the retrieval is completely wrong. Also, the result of classification should have been church, but it is understandable why the network could confuse churches and historical buildings; in figure 8 both classification and retrieval are good, while the door detection has a low percentage, probably because that door is different than a classic door; finally in figure 9 the system cannot detect a door and the retrieval with ORB is wrong, but both classification and retrieval with network feature are good.
+#### Experimentation
+- Models tested: **ResNet18**, **ResNet34**, **ResNet50**, and **ResNet152**.  
+- Optimization: Stochastic Gradient Descent (SGD) vs. Adam optimizer.  
+- Best result: **ResNet34** with a learning rate of 0.005, optimized using SGD.  
 
-# Example 1
+---
 
-![tre porte](https://user-images.githubusercontent.com/58270634/190852798-8a9866e0-18ce-4ff7-955c-f71976e65831.jpg)
+## 3. Door Detection
 
-# Example 2
+The dataset from the building classification task was annotated for door positions using **LabelImg**. We employed **YOLOv2** (You Only Look Once) for door detection, fine-tuning it on approximately 1,000 images. YOLOv2 was chosen for its speed, though it is less accurate than region-proposal architectures.
 
-![photo_2021-08-05_11-03-21](https://user-images.githubusercontent.com/58270634/190852847-6dd7d641-636d-40cf-9bb7-b36dc598cc31.jpg)
+---
+
+## 4. Image Retrieval
+
+### Approaches
+Two methods for image retrieval were tested:
+1. **ORB Features**: Using Oriented FAST and Rotated BRIEF descriptors.  
+2. **Neural Network Features**: Extracting features from the ResNet's last layer before the fully connected layer.
+
+### Dataset Processing
+The images underwent preprocessing steps:
+- Resizing to 400×400 pixels  
+- Grayscale conversion  
+- Histogram equalization  
+- Bilateral filtering  
+
+### Retrieval Methodology
+Features were extracted, and similarity between query and dataset images was computed using **Mean Squared Error (MSE)**. Query expansion involved applying geometric transformations (rotation, perspective, WARP) to enhance feature matching.
+
+---
+
+## Results
+
+### Key Findings:
+1. **Building Classification**: ResNet34 achieved robust performance.  
+2. **Door Detection**: YOLOv2 produced good results but showed room for improvement.  
+3. **Image Retrieval**: Neural network features provided more stable results compared to ORB.  
+
+#### Examples of Results:
+- **Figure 6**: Good retrieval with ORB, ResNet, and YOLO; network-based retrieval failed.  
+- **Figure 7**: Excellent door detection but incorrect retrieval and classification.  
+- **Figure 8**: Accurate classification and retrieval; low door detection confidence.  
+- **Figure 9**: Classification and network-based retrieval succeeded, but door detection and ORB retrieval failed.
+
+---
+
+## Example Outputs
+
+### Example 1: Detection and Classification
+![Three Doors](https://user-images.githubusercontent.com/58270634/190852798-8a9866e0-18ce-4ff7-955c-f71976e65831.jpg)
+
+### Example 2: Image Retrieval and Detection
+![Building and Door](https://user-images.githubusercontent.com/58270634/190852847-6dd7d641-636d-40cf-9bb7-b36dc598cc31.jpg)
+
+---
+
+## Future Improvements
+
+1. Enhance door detection accuracy using YOLOv5 or YOLOv8.  
+2. Increase dataset size and diversity for better generalization.  
+3. Explore additional feature descriptors for image retrieval.  
+4. Implement real-time deployment scenarios with optimized models.  
+5. Extend the classification task to include additional building types.
